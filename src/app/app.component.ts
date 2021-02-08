@@ -33,28 +33,28 @@ export class AppComponent {
       let nextMoveInLease: Lease[] | null;
 
       if (makeReadyPost.unit.leases) {
-        nextMoveInLease = makeReadyPost.unit.leases.filter(
-          (lease) => {
-            if (lease.moveInDate === null) {
-              throw new Error('Unexpected null encountered!');
-            }
-
-            return lease.moveInDate &&
-            //  new Date(lease.moveInDate) > new Date(lastMoveOutLease.moveOutDate)
-            new Date(lease.moveInDate) > new Date(LastMoveOutDate);
+        nextMoveInLease = makeReadyPost.unit.leases.filter((lease) => {
+          if (lease.moveInDate === null) {
+            throw new Error('Unexpected null encountered!');
           }
-        );
+
+          return (
+            lease.moveInDate &&
+            //  new Date(lease.moveInDate) > new Date(lastMoveOutLease.moveOutDate)
+            new Date(lease.moveInDate) > new Date(LastMoveOutDate)
+          );
+        });
 
         // tslint:disable-next-line: no-unused-expression
-        nextMoveInLease.sort(
-          (a, b) => {
-            if (a.moveInDate === null || b.moveInDate === null) {
-              throw new Error('Unexpected null encountered!');
-            }
-
-            return new Date(a.moveInDate).getTime() - new Date(b.moveInDate).getTime();
+        nextMoveInLease.sort((a, b) => {
+          if (a.moveInDate === null || b.moveInDate === null) {
+            throw new Error('Unexpected null encountered!');
           }
-        )[0];
+
+          return (
+            new Date(a.moveInDate).getTime() - new Date(b.moveInDate).getTime()
+          );
+        })[0];
       }
     }
   }
@@ -83,4 +83,5 @@ export class AppComponent {
         )[0];
       }
     }
+  }
 }
